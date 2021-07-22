@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<!-- 配置生成器 -->
+<generatorConfiguration>
+
+    <!--数据库驱动jar包的真实路径，若在pom.xml文件中，增加了如下插件
+     <plugin>
+        <dependencies>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.38</version>
+            </dependency>
+        </dependencies>
+     </plugin>，则下面的数据库驱动jar包的真实路径忽略-->
+    <!--<classPathEntry location="C:\Users\btc\.m2\repository\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar"/>-->
+
+    <!-- 一个数据库一个context -->
+    <!--defaultModelType="flat" 大数据字段，不分表 -->
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+
+        <!-- 数据库地址、用户名及密码 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/miaosha" userId="root" password="admin" />
+
+        <!-- 类型转换 -->
+<!--        <javaTypeResolver>
+            &lt;!&ndash; 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，
+            若设置 true 时，把JDBC DECIMAL 和 NUMERIC 类型解析为java.math.BigDecimal &ndash;&gt;
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>-->
+
+        <!-- 自动生成的实体类的存放地址 -->
+        <javaModelGenerator targetPackage="com.dwc.dataobject" targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="false"/>
+        </javaModelGenerator>
+
+        <!-- 生成 map.xml 文件的地址 -->
+        <sqlMapGenerator targetPackage="mapping" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+
+        <!--生成的Dao类的存放位置-->
+        <!-- 客户端代码，生成易于使用的针对Model对象和XML配置文件的代码
+                type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象
+                type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
+                type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
+        -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dwc.dao" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--根据数据库中的表生成对应的实体类-->
+        <!-- table可以有多个,每个数据库中的表都可以写一个table，
+        tableName表示要匹配的数据库表,也可以在tableName属性中通过使用%通配符来匹配所有数据库表,只有匹配的表才会自动生成文件 -->
+        <!--如果想生成一个表则tableName="table_name"-->
+
+        <table tableName="promo" domainObjectName="PromoDO" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false"/>
+
+    </context>
+</generatorConfiguration>
